@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-server
+  labels:
+    name: deploy-server
+    app: project-aaeo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deploy-server
+      app: project-aaeo
+  template:
+    metadata:
+      name: deploy-server
+      labels:
+        name: deploy-server
+        app: project-aaeo
+    spec:
+      containers:
+        - name: deploy-server
+          image: "aaeo/server:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080

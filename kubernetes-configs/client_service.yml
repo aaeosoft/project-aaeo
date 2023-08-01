@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: client
+  labels:
+    name: client
+    app: project-aaeo
+spec:
+  type: LoadBalancer
+  selector:
+    app: project-aaeo
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

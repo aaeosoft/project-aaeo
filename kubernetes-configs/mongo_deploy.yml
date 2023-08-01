@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: deploy-mongo
+  labels:
+    name: deploy-mongo
+    app: project-aaeo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: deploy-mongo
+      app: project-aaeo
+  template:
+    metadata:
+      name: deploy-mongo
+      labels:
+        name: deploy-mongo
+        app: project-aaeo
+    spec:
+      containers:
+        - name: deploy-mongo
+          image: "aaeo/mongo:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+      volumes:
+        - name: "mongo-persistent-storage"
+          persistentVolumeClaim:
+            claimName: "mongo-persistent-storage"

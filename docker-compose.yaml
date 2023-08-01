@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  client:
+    build: client
+    stdin_open: true
+    container_name: client
+    image: aaeo/client:latest
+    restart: always
+    depends_on:
+      - server
+    ports:
+      - 80:80
+    networks:
+      - react-express
+
+  server:
+    container_name: server
+    restart: always
+    build: server
+    depends_on:
+      - mongo
+    ports:
+      - 8080:8080
+    networks:
+      - express-mongo
+      - react-express
+    image: aaeo/server:latest
+
+  mongo:
+    container_name: mongo
+    restart: always
+    build: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - express-mongo
+    image: aaeo/mongo:latest
+
+networks:
+  react-express:
+  express-mongo:

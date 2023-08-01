@@ -1,0 +1,21 @@
+import { ITokenService } from "../interfaces/services/token.service";
+import * as jwt from "jsonwebtoken";
+import path from "path";
+import * as fs from "fs";
+
+export class TokenService implements ITokenService {
+
+    private get_private_key(): Buffer {
+        const keyPath = path.join(__dirname, '..', '..', 'keys/jwt.key');
+
+        return fs.readFileSync(keyPath);
+    }
+
+    expire_time(): number {
+        return process.env.ACCESS_TOKEN_EXPIRE_TIME ? parseInt(process.env.ACCESS_TOKEN_EXPIRE_TIME) : (60 * 60 * 6);
+    }
+
+    encode(data: { [key: string]: string | number }): string {
+        return jwt.sign(data, this.get_private_key(), { algorithm: "RS256", expiresIn: this.expire_time() });
+    }
+}

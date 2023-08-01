@@ -1,0 +1,40 @@
+version: '3.4'
+services:
+  app:
+    container_name: "project-aaeo"
+    build: .
+    ports:
+      - "${APP_PORT:-5000}:5000"
+    networks:
+      - project
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    volumes:
+      - ".:/code/app"
+      - "node_volume:/code/app/node_modules"
+  mongo:
+    image: mongo
+    restart: always
+    networks:
+      - project
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: project-aaeo
+    volumes:
+      - "mongodb:/data/db"
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/init-mongo.js
+
+volumes:
+  node_volume:
+    driver: local
+  mongodb:
+    driver: local
+
+networks:
+  project:
+    driver: bridge

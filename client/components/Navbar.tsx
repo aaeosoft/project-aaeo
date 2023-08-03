@@ -6,7 +6,7 @@ import UserMenu from "./UserMenu";
 
 const Navbar = () => {
   return (
-    <div className="bg-slate-800 py-3">
+    <div className="bg-slate-800 py-3 min-w-max">
       <div className="w-[1115px] flex items-center mx-auto">
         <Link href={"/"} className="w-[20%]">
           <Image

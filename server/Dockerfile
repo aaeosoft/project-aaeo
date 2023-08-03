@@ -1,4 +1,4 @@
-FROM node:18
+FROM node:20.4-bookworm-slim
 
 ENV PORT 8080
 

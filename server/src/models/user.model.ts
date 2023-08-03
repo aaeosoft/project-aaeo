@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import IUserSchema from "../interfaces/models/user.schema.interface";
+import { UserType } from "../enums/userType.enum";
 
 const userModelSchema = new Schema<IUserSchema>({
     firstName: {
@@ -18,6 +19,11 @@ const userModelSchema = new Schema<IUserSchema>({
     password: {
         type: String,
         required: true,
+    },
+    type: {
+        type: String,
+        default: UserType.USER,
+        enum: UserType
     },
     isActive: {
         type: Boolean,

@@ -1,10 +1,16 @@
-FROM node:20.4-bookworm-slim
-ENV NODE_ENV=production
-RUN apt-get update
-WORKDIR /usr/src/app
-COPY package*.json ./
-RUN npm ci --omit=dev
+FROM node:18
+
+ENV PORT 8080
+
+WORKDIR /code/app
+
 COPY . .
-EXPOSE 8080
+COPY package.json package.json
+COPY package-lock.json package-lock.json
+
+RUN npm install && npm cache clean — force
+
+EXPOSE $PORT
+
 CMD [ "npm", "run", "start" ]
 

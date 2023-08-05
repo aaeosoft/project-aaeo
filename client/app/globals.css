@@ -2,14 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+.enter {
+  @apply flex items-center justify-center py-36 bg-slate-50;
+}
+
+.enter div.first {
+  @apply bg-white border shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[500px] mx-auto;
+}
+
+.page-area {
+  @apply w-[1115px] h-full bg-white shadow-md p-4 rounded-sm flex flex-col;
+}
+
+.ql-editor{
+  @apply min-h-[200px];
+}
+
 .button {
-    @apply px-4 py-2 bg-blue-500 text-white rounded-md transition duration-300 ease-in-out transform;
+  @apply px-4 py-2 rounded-md transition duration-300 ease-in-out transform;
 }
 
 .button:hover {
-    @apply scale-105;
+  @apply scale-105;
 }
 
 .button:active {
-    @apply scale-95;
+  @apply scale-95;
 }

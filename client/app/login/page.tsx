@@ -3,8 +3,8 @@ import React from "react";
 
 const Login = () => {
   return (
-    <div className="flex items-center justify-center py-36">
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-[500px] mx-auto">
+    <div className="enter">
+      <div className="first">
         <h2 className="text-2xl font-bold mb-6">Giriş Yap</h2>
         <div className="mb-6">
           <label

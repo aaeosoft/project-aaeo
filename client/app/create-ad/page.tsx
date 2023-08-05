@@ -1,10 +1,14 @@
 "use client";
 import CategoriesArea from "@/components/CategoriesArea";
 import CategoryCard from "@/components/CategoryCard";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const CreateAd = () => {
   const [categoriesName, setCategoriesName] = useState([""]);
+
+  const router = useRouter();
+  const pathname = usePathname();
 
   const updateCategoryName = (index: number, newName: string) => {
     setCategoriesName((prevCategories) => {
@@ -15,13 +19,15 @@ const CreateAd = () => {
   };
 
   useEffect(() => {
-    console.log(categoriesName);
+    if (categoriesName.length === 2) {
+      router.push(pathname + "/ad-details");
+    }
   }, [categoriesName]);
 
   return (
-    <div className="flex justify-center items-center py-36 bg-slate-50 min-w-min">
-      <div className="w-[1115px] h-full bg-white shadow-md p-4 rounded-sm flex flex-col">
-        <text className="font-semibold">Kategori Seç</text>
+    <div className="enter min-w-min">
+      <div className="page-area">
+        <div className="font-semibold">Kategori Seç</div>
         {categoriesName[0] === "" ? (
           <div className="flex gap-2">
             <CategoryCard
@@ -49,7 +55,7 @@ const CreateAd = () => {
           <div className="h-[350px] flex flex-col gap-2">
             <div>
               {categoriesName.map((val, i) => (
-                <text
+                <div
                   onClick={() => {
                     i === 0 && setCategoriesName([""]);
                   }}
@@ -60,13 +66,19 @@ const CreateAd = () => {
                 >
                   {i !== 0 && " > "}
                   {val}
-                </text>
+                </div>
               ))}
             </div>
-
-            <CategoriesArea
-              setState={(value) => updateCategoryName(1, value)}
-            />
+            <div className="flex flex-1 gap-2">
+              <CategoriesArea
+                setState={(value) => updateCategoryName(1, value)}
+              />
+              {categoriesName.length > 1 && (
+                <CategoriesArea
+                  setState={(value) => updateCategoryName(2, value)}
+                />
+              )}
+            </div>
           </div>
         )}
       </div>

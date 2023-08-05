@@ -49,7 +49,7 @@ const UserMenu = () => {
           <div
             className="hover:underline cursor-pointer"
             onClick={() => {
-              router.push("login");
+              router.push("/login");
             }}
           >
             Giriş Yap
@@ -64,7 +64,7 @@ const UserMenu = () => {
           <div
             className="hover:underline cursor-pointer"
             onClick={() => {
-              router.push("register");
+              router.push("/register");
             }}
           >
             Kayıt Ol

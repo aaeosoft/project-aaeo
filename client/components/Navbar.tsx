@@ -22,8 +22,8 @@ const Navbar = () => {
         </div>
         <div className="w-[40%] flex gap-3 items-center justify-end">
           <UserMenu />
-          <button title="" className="button text-sm">
-            <Link href={'create-ad'}>Ücretsiz İlan Ver</Link>
+          <button title="" className="bg-white text-black button text-sm">
+            <Link href={'/create-ad'}>Ücretsiz İlan Ver</Link>
           </button>
         </div>
       </div>

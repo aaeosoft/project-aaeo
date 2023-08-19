@@ -1,8 +1,13 @@
 "use client"
+import dynamic from "next/dynamic";
 import React from "react";
-import ReactQuill from "react-quill";
 
 import 'react-quill/dist/quill.snow.css';
+
+const ReactSSRQuill = dynamic(() => import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
 
 type Props = {
   title: string;
@@ -14,7 +19,7 @@ const InputTextArea = ({ title, type }: Props) => {
     <div className="w-full flex flex-col gap-2 mt-2 mb-4">
       <div className="text-sm font-semibold">{title}</div>
       {type === "area" ? (
-        <ReactQuill theme="snow"></ReactQuill>
+        <ReactSSRQuill theme="snow"></ReactSSRQuill>
       ) : (
         <input
           className={

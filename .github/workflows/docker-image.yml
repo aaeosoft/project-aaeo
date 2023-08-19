@@ -22,7 +22,7 @@ jobs:
           host: 4.tcp.eu.ngrok.io
           username: root
           password: aaeo
-          port: 15648
+          port: 11423
           script: |
             git clone https://github.com/aaeosoft/project-aaeo
             cd project-aaeo

@@ -4,7 +4,7 @@ services:
     build: client
     stdin_open: true
     container_name: client
-    image: aaeo/client:latest
+    image: aaeosoft/client:latest
     restart: always
     depends_on:
       - server
@@ -24,7 +24,7 @@ services:
     networks:
       - express-mongo
       - react-express
-    image: aaeo/server:latest
+    image: aaeosoft/server:latest
 
   mongo:
     container_name: mongo
@@ -34,7 +34,7 @@ services:
       - 27017:27017
     networks:
       - express-mongo
-    image: aaeo/mongo:latest
+    image: aaeosoft/mongo:latest
 
 networks:
   react-express:

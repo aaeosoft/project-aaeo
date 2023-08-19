@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: deploy-mongo
-          image: "aaeo/mongo:latest"
+          image: "aaeosoft/mongo:latest"
           imagePullPolicy: Always
           ports:
             - containerPort: 27017

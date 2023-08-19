@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: deploy-server
-          image: "aaeo/server:latest"
+          image: "aaeosoft/server:latest"
           imagePullPolicy: Always
           ports:
             - containerPort: 8080

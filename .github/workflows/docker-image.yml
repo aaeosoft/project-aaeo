@@ -1,0 +1,34 @@
+name: Docker Image CI-CD
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+jobs:
+  runMultipleCommands:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - run: docker compose build
+      - run: docker compose push
+      - uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: 6.tcp.eu.ngrok.io
+          username: root
+          password: aaeo
+          port: 19385
+          script: |
+            git clone https://github.com/aaeosoft/project-aaeo
+            cd project-aaeo
+            minikube delete
+            minikube start --driver=docker --force
+            kubectl delete -R -f ./kubernetes-configs/ --ignore-not-found=true
+            kubectl create -R -f ./kubernetes-configs/
+            cd ..
+            rm project-aaeo -r

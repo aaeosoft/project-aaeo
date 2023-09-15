@@ -4,7 +4,7 @@ services:
     container_name: "project-aaeo"
     build: .
     ports:
-      - "${APP_PORT:-8080}:8080"
+      - "8080:${PORT:-8080}"
     networks:
       - project
     links:
@@ -20,7 +20,7 @@ services:
     networks:
       - project
     ports:
-      - 27017:27017
+      - "27017:${MONGODB_PORT:-8080}"
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example

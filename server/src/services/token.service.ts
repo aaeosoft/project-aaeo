@@ -1,4 +1,4 @@
-import { ITokenService } from "../interfaces/services/token.service";
+import { ITokenService } from "../interfaces/services/token.interface";
 import * as jwt from "jsonwebtoken";
 import path from "path";
 import * as fs from "fs";

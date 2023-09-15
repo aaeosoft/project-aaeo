@@ -6,7 +6,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
     try {
-        const result =  await authService().login(email, password);
+        const result = await authService().login(email, password);
 
         return res.json(result);
     } catch (err: any) {
@@ -26,7 +26,18 @@ const register = async (req: Request, res: Response, next: NextFunction) => {
     }
 };
 
+const sendResetPassword = async (req: Request, res: Response, next: NextFunction) => {
+    const { email } = req.body;
+
+    try {
+        const sendMail = await authService().forgotPassword(email);
+    } catch (err: any) {
+        next(err);
+    }
+};
+
 export default {
     login,
     register,
+    sendResetPassword
 };

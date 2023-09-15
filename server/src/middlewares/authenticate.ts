@@ -23,8 +23,6 @@ const authenticate = async (req: Request, res: Response, next: NextFunction) => 
     } catch (err) {
         next(err);
     }
-
-
 };
 
 export default authenticate;

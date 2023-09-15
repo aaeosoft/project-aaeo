@@ -2,9 +2,9 @@ import { IUserRepository } from "../interfaces/repositories/user.interface";
 import { IAuthService } from "../interfaces/services/auth.interface";
 import { UserNotFoundError } from "../exceptions/user/UserNotFoundError";
 import { UserWrongInformationError } from "../exceptions/user/UserWrongInformationError";
-import { ITokenService } from "../interfaces/services/token.service";
+import { ITokenService } from "../interfaces/services/token.interface";
 import { User } from "../dto/User";
-import { ICryptService } from "../interfaces/services/crypt.service";
+import { ICryptService } from "../interfaces/services/crypt.interface";
 import { UserEmailAlreadExistError } from "../exceptions/user/UserEmailAlreadExistError";
 import { UserNotCreatedError } from "../exceptions/user/UserNotCreatedError";
 
@@ -67,5 +67,15 @@ export class AuthService implements IAuthService {
         }
 
         return result;
+    }
+
+    public async forgotPassword(email: string): Promise<Boolean> {
+        const user = await this.userRepository.getByEmail(email);
+
+        if (user == null) {
+            throw new UserEmailAlreadExistError();
+        }
+
+        return true;
     }
 }

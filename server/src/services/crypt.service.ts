@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { ICryptService } from "../interfaces/services/crypt.service";
+import { ICryptService } from "../interfaces/services/crypt.interface";
 
 export class CryptService implements ICryptService {
     salt_round: number;

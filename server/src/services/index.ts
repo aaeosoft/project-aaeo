@@ -1,6 +1,6 @@
 import { IAuthService } from "../interfaces/services/auth.interface";
-import { ICryptService } from "../interfaces/services/crypt.service";
-import { ITokenService } from "../interfaces/services/token.service";
+import { ICryptService } from "../interfaces/services/crypt.interface";
+import { ITokenService } from "../interfaces/services/token.interface";
 import { UserRepository } from "../repositories/user.repository";
 import { AuthService } from "./auth.service";
 import { CryptService } from "./crypt.service";

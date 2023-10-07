@@ -1,31 +1,39 @@
+import { Model } from "mongoose";
 import { User } from "../dto/User";
 import { IUserRepository } from "../interfaces/repositories/user.interface";
 import { UserModel } from "../models/user.model";
+import IUserSchema from "../interfaces/models/user.schema.interface";
 
 export class UserRepository implements IUserRepository {
-    public async getByEmail(email: string): Promise<User | null> {
-        const user = await UserModel.where('email', email).findOne();
+  private model: Model<IUserSchema>;
 
-        if (!user) return null;
+  constructor() {
+    this.model = UserModel;
+  }
 
-        return User.fromModel(user);
-    }
+  public async getByEmail(email: string): Promise<User | null> {
+    const user = await this.model.where("email", email).findOne();
 
-    public async getEmailIsExist(email: string): Promise<boolean> {
-        const count = await UserModel.where('email', email).count();
+    if (!user) return null;
 
-        return count > 0;
-    }
+    return User.fromModel(user);
+  }
 
-    public async create(user: User): Promise<User | null> {
-        const createdUser = await UserModel.create({
-            firstName: user.getFirstName(),
-            lastName: user.getLastName(),
-            email: user.getEmail(),
-            password: user.getPassword(),
-            isActive: user.getIsActive(),
-        });
+  public async getEmailIsExist(email: string): Promise<boolean> {
+    const count = await this.model.where("email", email).count();
 
-        return User.fromModel(createdUser);
-    }
+    return count > 0;
+  }
+
+  public async create(user: User): Promise<User | null> {
+    const createdUser = await this.model.create({
+      firstName: user.getFirstName(),
+      lastName: user.getLastName(),
+      email: user.getEmail(),
+      password: user.getPassword(),
+      isActive: user.getIsActive(),
+    });
+
+    return User.fromModel(createdUser);
+  }
 }

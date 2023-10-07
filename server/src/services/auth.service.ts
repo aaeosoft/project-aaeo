@@ -73,7 +73,7 @@ export class AuthService implements IAuthService {
         const user = await this.userRepository.getByEmail(email);
 
         if (user == null) {
-            throw new UserEmailAlreadExistError();
+            throw new UserNotFoundError();
         }
 
         return true;

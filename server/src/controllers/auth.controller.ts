@@ -31,6 +31,8 @@ const sendResetPassword = async (req: Request, res: Response, next: NextFunction
 
     try {
         const sendMail = await authService().forgotPassword(email);
+
+        return res.json({});
     } catch (err: any) {
         next(err);
     }

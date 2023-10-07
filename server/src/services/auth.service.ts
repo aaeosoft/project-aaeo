@@ -9,23 +9,35 @@ import { UserEmailAlreadExistError } from "../exceptions/user/UserEmailAlreadExi
 import { UserNotCreatedError } from "../exceptions/user/UserNotCreatedError";
 import { PasswordResetRepository } from "../repositories/password_reset.repository";
 import { IPasswordResetRepository } from "../interfaces/repositories/password_reset.interface";
+import { TokenService } from "./token.service";
+import { CryptService } from "./crypt.service";
+import { UserRepository } from "../repositories/user.repository";
+import { IEmailService } from "../interfaces/services/email.interface";
+import { EmailService } from "./email.service";
 
 export class AuthService implements IAuthService {
+  private static instance: AuthService;
+
   userRepository: IUserRepository;
   tokenService: ITokenService;
   cryptService: ICryptService;
+  emailService: IEmailService;
   passwordResetRepository: IPasswordResetRepository;
 
-  constructor(
-    userRepository: IUserRepository,
-    tokenService: ITokenService,
-    cryptService: ICryptService,
-    passwordResetRepository: IPasswordResetRepository
-  ) {
-    this.userRepository = userRepository;
-    this.tokenService = tokenService;
-    this.cryptService = cryptService;
-    this.passwordResetRepository = passwordResetRepository;
+  constructor() {
+    this.tokenService = TokenService.getInstance();
+    this.cryptService = CryptService.getInstance();
+    this.passwordResetRepository = PasswordResetRepository.getInstance();
+    this.userRepository = UserRepository.getInstance();
+    this.emailService = EmailService.getInstance();
+  }
+
+  public static getInstance(): AuthService {
+    if (!AuthService.instance) {
+      AuthService.instance = new AuthService();
+    }
+
+    return AuthService.instance;
   }
 
   public async login(
@@ -105,6 +117,12 @@ export class AuthService implements IAuthService {
 
     const reset_token_data =
       await this.passwordResetRepository.createResetPasswordToken(user, token);
+
+    await this.emailService.sendMail(
+      user,
+      "Şifre sıfırlama maili",
+      "token değeri: " + reset_token_data?.getToken()
+    );
 
     return true;
   }

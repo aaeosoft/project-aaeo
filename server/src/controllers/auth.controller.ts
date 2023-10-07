@@ -3,43 +3,58 @@ import { authService } from "../services";
 import { User } from "../dto/User";
 
 const login = async (req: Request, res: Response, next: NextFunction) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
 
-    try {
-        const result = await authService().login(email, password);
+  try {
+    const result = await authService().login(email, password);
 
-        return res.json(result);
-    } catch (err: any) {
-        next(err);
-    }
+    return res.json(result);
+  } catch (err: any) {
+    next(err);
+  }
 };
 
 const register = async (req: Request, res: Response, next: NextFunction) => {
-    const { firstName, lastName, email, password, passwordConfirmation } = req.body;
+  const { firstName, lastName, email, password, passwordConfirmation } =
+    req.body;
 
-    try {
-        const user = new User(firstName, lastName, email, password);
+  try {
+    const user = new User(firstName, lastName, email, password);
 
-        return res.json(await authService().register(user));
-    } catch (err: any) {
-        next(err);
-    }
+    return res.json(await authService().register(user));
+  } catch (err: any) {
+    next(err);
+  }
 };
 
-const sendResetPassword = async (req: Request, res: Response, next: NextFunction) => {
-    const { email } = req.body;
+const sendResetPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { email } = req.body;
 
-    try {
-        const sendMail = await authService().forgotPassword(email);
+  try {
+    const sendMail = await authService().forgotPassword(email);
 
-        return res.json({});
-    } catch (err: any) {
-        next(err);
+    if (sendMail) {
+      return res.json({
+        message: "Mail başarıyla gönderildi.",
+        result: "ok",
+      });
+    } else {
+      return res.json({
+        message: "Mail gönderilemedi.",
+        result: "notok",
+      });
     }
+  } catch (err: any) {
+    next(err);
+  }
 };
 
 export default {
-    login,
-    register,
-    sendResetPassword
+  login,
+  register,
+  sendResetPassword,
 };

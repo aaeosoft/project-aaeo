@@ -5,6 +5,16 @@ import * as fs from "fs";
 import { TokenData } from "../types/token_data";
 
 export class TokenService implements ITokenService {
+  private static instance: TokenService;
+
+  public static getInstance(): TokenService {
+    if (!TokenService.instance) {
+      TokenService.instance = new TokenService();
+    }
+
+    return TokenService.instance;
+  }
+
   private get_private_key(): Buffer {
     const keyPath = path.join(__dirname, "..", "..", "keys/jwt.key");
 

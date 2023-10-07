@@ -5,10 +5,19 @@ import { UserModel } from "../models/user.model";
 import IUserSchema from "../interfaces/models/user.schema.interface";
 
 export class UserRepository implements IUserRepository {
+  private static instance: UserRepository;
   private model: Model<IUserSchema>;
 
   constructor() {
     this.model = UserModel;
+  }
+
+  public static getInstance(): UserRepository {
+    if (!UserRepository.instance) {
+      UserRepository.instance = new UserRepository();
+    }
+
+    return UserRepository.instance;
   }
 
   public async getByEmail(email: string): Promise<User | null> {

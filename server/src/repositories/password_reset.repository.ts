@@ -6,10 +6,19 @@ import { User } from "../dto/User";
 import { PasswordReset } from "../dto/PasswordReset";
 
 export class PasswordResetRepository implements IPasswordResetRepository {
+  private static instance: PasswordResetRepository;
   private model: Model<IPasswordResetSchema>;
 
   constructor() {
     this.model = passwordResetModel;
+  }
+
+  public static getInstance(): PasswordResetRepository {
+    if (!PasswordResetRepository.instance) {
+      PasswordResetRepository.instance = new PasswordResetRepository();
+    }
+
+    return PasswordResetRepository.instance;
   }
 
   public async isExistToken(user: User): Promise<boolean> {
@@ -23,7 +32,7 @@ export class PasswordResetRepository implements IPasswordResetRepository {
       await this.model.deleteMany({
         email: user.getEmail(),
       });
-      
+
       return true;
     } catch (err: any) {
       return false;

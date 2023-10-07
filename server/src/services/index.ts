@@ -8,23 +8,13 @@ import { CryptService } from "./crypt.service";
 import { TokenService } from "./token.service";
 
 export const authService = (): IAuthService => {
-  const userRepository = new UserRepository();
-  const tService = tokenService();
-  const cService = cryptService();
-  const passwordRepository = new PasswordResetRepository();
-
-  return new AuthService(
-    userRepository,
-    tService,
-    cService,
-    passwordRepository
-  );
+  return AuthService.getInstance();
 };
 
 export const cryptService = (): ICryptService => {
-  return new CryptService();
+  return CryptService.getInstance();
 };
 
 export const tokenService = (): ITokenService => {
-  return new TokenService();
+  return TokenService.getInstance();
 };

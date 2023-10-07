@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import IPasswordReset from "../interfaces/models/password_reset.schema.interface";
+import IPasswordResetSchema from "../interfaces/models/password_reset.schema.interface";
 
-const passwordResetSchema = new Schema<IPasswordReset>(
+const passwordResetSchema = new Schema<IPasswordResetSchema>(
   {
     email: {
       type: String,
@@ -9,6 +9,10 @@ const passwordResetSchema = new Schema<IPasswordReset>(
     },
     token: {
       type: String,
+      required: true,
+    },
+    expireAt: {
+      type: Date,
       required: true,
     },
   },

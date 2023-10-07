@@ -1,8 +1,9 @@
 import { Document } from "mongoose";
 import { UserType } from "../../enums/userType.enum";
 
-export default interface IPasswordReset extends Document {
+export default interface IPasswordResetSchema extends Document {
   email: string;
   token: string;
+  expireAt: Date;
   createdAt: Date;
 }

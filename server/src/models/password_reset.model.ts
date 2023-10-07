@@ -10,10 +10,7 @@ const passwordResetSchema = new Schema<IPasswordResetSchema>(
     token: {
       type: String,
       required: true,
-    },
-    expireAt: {
-      type: Date,
-      required: true,
+      index: true,
     },
   },
   {
